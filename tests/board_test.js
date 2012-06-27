@@ -46,5 +46,41 @@ describe("The board", function () {
             done();
         });
 
+        it("check win down", function(){
+            var board = b.instance();
+            board.put(0,0, b.CROSS);
+            board.put(1,0, b.CROSS);
+            board.put(2,0, b.CROSS);
+
+            assert.ok(board.checkWin(b.CROSS));
+        });
+
+        it("check win across", function(){
+            var board = b.instance();
+            board.put(0,0, b.CROSS);
+            board.put(0,1, b.CROSS);
+            board.put(0,2, b.CROSS);
+
+            assert.ok(board.checkWin(b.CROSS));
+        });
+
+        it("check win diag", function(){
+            var board = b.instance();
+            board.put(0,0, b.CROSS);
+            board.put(1,1, b.CROSS);
+            board.put(2,2, b.CROSS);
+
+            assert.ok(board.checkWin(b.CROSS));
+        });
+
+        it("check win diag", function(){
+            var board = b.instance();
+            board.put(2,0, b.CROSS);
+            board.put(1,1, b.CROSS);
+            board.put(0,2, b.CROSS);
+
+            assert.ok(board.checkWin(b.CROSS));
+        });
+
     });
 });
