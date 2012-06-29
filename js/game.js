@@ -4,14 +4,15 @@ var b = require("./board.js"),
 
 
 var board = b.instance(),
-    maxDepth = 2;
+    crossMaxDepth = 5,
+    circleMaxDepth = 1;
 
 var p = b.CROSS;
 while(true){
 
     if(!board.checkWin(b.opposite(p)) && board.free().length){
         console.log(board.toString());
-        var move = g.next(p, board, maxDepth);
+        var move = g.next(p, board, p === b.CROSS ? crossMaxDepth : circleMaxDepth);
         board.put(move[0], move[1], p);
         p = b.opposite(p);
 
@@ -22,6 +23,8 @@ while(true){
         console.log("Well done. "+ p + " wins!");
         break;
     } else {
+        console.log(board.toString());
+        console.log();
         console.log("Draw :{");
         break;
     }

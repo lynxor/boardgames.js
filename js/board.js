@@ -72,19 +72,18 @@ var instance = function (initial) {
 
             var that = this;
             if(that.checkWin(p)){
-                return Number.MAX_VALUE;
+                return Number.POSITIVE_INFINITY;
             } else if(that.checkWin(opposite(p))){
-                return Number.MIN_VALUE;
+                return Number.NEGATIVE_INFINITY;
             }
 
-            function onetwo(player){
+            function onetwo(player, twoWeight, oneWeight){
                 var twos = that.checkNum(player, 2),
                     ones =that.checkNum(player, 1);
-
-                return 2*twos + ones;
+                return twoWeight*twos + oneWeight*ones;
             }
 
-            return onetwo(p) - onetwo(opposite(p));
+            return  onetwo(p, 2, 1) - onetwo(opposite(p), 3, 1);
 
         },
         checkNum: function(p, length){
@@ -116,9 +115,9 @@ var instance = function (initial) {
         toString: function(){
             var that = this;
             return "------\n" +
-                _.map(_.range(3), function(a){
-                return _.map(_.range(3), function(b){
-                    var value = that.get(b, a);
+                _.map(_.range(3), function(row){
+                return _.map(_.range(3), function(col){
+                    var value = that.get(row, col);
                      if(value === CROSS){
                          return "X";
                      } else if(value === CIRCLE){

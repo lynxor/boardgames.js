@@ -2,7 +2,6 @@ var _ = require("underscore"),
     b = require("./board.js");
 
 
-
 function next(originalPlayer, originalBoard, originalDepth) {
 
     return minmax(originalPlayer, originalBoard, originalDepth, true);
@@ -10,11 +9,18 @@ function next(originalPlayer, originalBoard, originalDepth) {
     //Level; true - max, false - min
     function minmax(p, board, depth, level) {
         function min(acc, result) {
-            return result < acc ? result : acc;
+
+            if (result.fitness === acc.fitness) {
+                return result.depth < acc.depth ? result : acc;
+            }
+            return result.fitness < acc.fitness ? result : acc;
         }
 
         function max(acc, result) {
-            return result > acc ? result : acc;
+            if (result.fitness === acc.fitness) {
+                return result.depth > acc.depth ? result : acc;
+            }
+            return result.fitness > acc.fitness ? result : acc;
         }
 
         function calcLevel(chooseOne, acc) {
@@ -27,24 +33,38 @@ function next(originalPlayer, originalBoard, originalDepth) {
             });
             var chosenScore = _.reduce(results, chooseOne, acc);
             if (depth === originalDepth) {
-                var scoreIndex = _.indexOf(results, chosenScore);
+
+                var scoreIndex = -1,
+                    ind, result;
+
+                for (ind in results) {
+                    result = results[ind];
+                    if (result.fitness === chosenScore.fitness && result.depth === chosenScore.depth) {
+                        scoreIndex = ind;
+                    }
+                }
+
                 return free[scoreIndex];
             } else {
                 return chosenScore;
             }
         }
 
+//        if (depth === 2) {
+//            console.log(board.toString());
+//            console.log("LEVEL 3");
+//        }
         //LEAFNODE
-        if (!depth || !board.free().length || board.checkWin(p)) {
-            return board.fitness(originalPlayer);
+        if (!depth || !board.free().length || board.checkWin(p) || board.checkWin(b.opposite(p))) {
+            return {fitness:board.fitness(originalPlayer), depth:depth};
         }
         //MAX NODE
         else if (level) {
-            return calcLevel(max, Number.NEGATIVE_INFINITY);
+            return calcLevel(max, {fitness:Number.NEGATIVE_INFINITY, depth:Number.POSITIVE_INFINITY});
         }
         //MIN NODE
         else {
-            return calcLevel(min, Number.POSITIVE_INFINITY);
+            return calcLevel(min, {fitness:Number.POSITIVE_INFINITY, depth:Number.NEGATIVE_INFINITY});
         }
     }
 }
