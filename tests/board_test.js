@@ -55,6 +55,18 @@ describe("The board", function () {
             assert.ok(board.checkWin(b.CROSS));
         });
 
+        it("check no win ", function(){
+            var board = b.instance();
+            board.put(0,0, b.CROSS);
+            assert.ifError(board.checkWin(b.CROSS));
+
+            var board = b.instance();
+            assert.ifError(board.checkWin(b.CROSS));
+            assert.ifError(board.checkWin(b.CIRCLE));
+        });
+
+
+
         it("check win across", function(){
             var board = b.instance();
             board.put(0,0, b.CROSS);
@@ -64,7 +76,7 @@ describe("The board", function () {
             assert.ok(board.checkWin(b.CROSS));
         });
 
-        it("check win diag", function(){
+        it("check win diag 1", function(){
             var board = b.instance();
             board.put(0,0, b.CROSS);
             board.put(1,1, b.CROSS);
@@ -73,7 +85,7 @@ describe("The board", function () {
             assert.ok(board.checkWin(b.CROSS));
         });
 
-        it("check win diag", function(){
+        it("check win diag 2", function(){
             var board = b.instance();
             board.put(2,0, b.CROSS);
             board.put(1,1, b.CROSS);
@@ -82,5 +94,38 @@ describe("The board", function () {
             assert.ok(board.checkWin(b.CROSS));
         });
 
+        it("fitness", function(){
+            var board = b.instance();
+            board.put(1,0, b.CROSS);
+            board.put(1,1, b.CROSS);
+
+            assert.strictEqual(6, board.fitness(b.CROSS));
+
+            board.put(1,2, b.CROSS);
+            assert.strictEqual(Number.MAX_VALUE, board.fitness(b.CROSS));
+        });
+
+        it("toString test", function(){
+            var board = b.instance();
+            board.put(1,0, b.CROSS);
+            board.put(1,1, b.CROSS);
+            board.put(0,0, b.CIRCLE);
+            board.put(2,2, b.CIRCLE);
+
+            var expected = "------\nO X -\n- X -\n- - O\n------";
+            assert.equal(expected, board.toString());
+
+        });
+
+        it("copy", function(){
+            var board = b.instance();
+            board.put(1,0, b.CROSS);
+
+            var nb = board.copy();
+            nb.put(1,1, b.CIRCLE);
+
+            assert.ifError(board.get(1,1));
+            assert.ok(nb.get(1,1));
+        });
     });
 });
