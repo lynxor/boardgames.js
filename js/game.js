@@ -4,7 +4,7 @@ var b = require("./board.js"),
 
 
 var board = b.instance(),
-    crossMaxDepth = 5,
+    crossMaxDepth = 3,
     circleMaxDepth = 1;
 
 var p = b.CROSS;

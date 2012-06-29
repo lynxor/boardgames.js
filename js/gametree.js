@@ -3,7 +3,10 @@ var _ = require("underscore"),
 
 
 function next(originalPlayer, originalBoard, originalDepth) {
-
+    if(originalDepth === 0){
+        //Just pick first available move
+        return originalBoard.free()[0];
+    }
     return minmax(originalPlayer, originalBoard, originalDepth, true);
 
     //Level; true - max, false - min
@@ -50,10 +53,6 @@ function next(originalPlayer, originalBoard, originalDepth) {
             }
         }
 
-//        if (depth === 2) {
-//            console.log(board.toString());
-//            console.log("LEVEL 3");
-//        }
         //LEAFNODE
         if (!depth || !board.free().length || board.checkWin(p) || board.checkWin(b.opposite(p))) {
             return {fitness:board.fitness(originalPlayer), depth:depth};
