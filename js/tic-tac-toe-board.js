@@ -47,6 +47,9 @@ var instance = function (initial) {
         put:function (r, c, p) {
             moves[index(r, c)] = p;
         },
+        play: function(pos, p){
+            this.put(pos[0], pos[1], p);
+        },
         get:function (r, c) {
             return moves[index(r, c)];
         },

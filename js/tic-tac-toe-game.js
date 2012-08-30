@@ -1,5 +1,5 @@
-var b = require("./board.js"),
-    g = require("./gametree.js"),
+var b = require("./tic-tac-toe-board.js"),
+    gt = require("./gametree.js"),
     _ = require("underscore");
 
 
@@ -7,13 +7,14 @@ var board = b.instance(),
     crossMaxDepth = 3,
     circleMaxDepth = 1;
 
-var p = b.CROSS;
+var p = b.CROSS,
+    g = gt.gametree(b);
 while(true){
 
     if(!board.checkWin(b.opposite(p)) && board.free().length){
         console.log(board.toString());
         var move = g.next(p, board, p === b.CROSS ? crossMaxDepth : circleMaxDepth);
-        board.put(move[0], move[1], p);
+        board.play(move, p);
         p = b.opposite(p);
 
     } else if(board.checkWin(b.opposite(p))){
