@@ -89,6 +89,7 @@ var instance = function (initial) {
             return  onetwo(p, 2, 1) - onetwo(opposite(p), 3, 1);
 
         },
+        //counts the number of occurrences of the given player in each rows
         checkNum: function(p, length){
             var that = this;
             return _.reduce(possibleRows, function(acc, row){

@@ -10,7 +10,8 @@ function gametree(boardImpl) {
                 //Just pick first available move
                 return originalBoard.free(originalPlayer)[0];
             }
-            return minmax(originalPlayer, originalBoard, originalDepth, true);
+            return minmax(originalPlayer, originalBoard, originalDepth, true) || originalBoard.free(originalPlayer)[0];
+
 
             //Level; true - max, false - min
             function minmax(p, board, depth, level) {
