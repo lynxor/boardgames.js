@@ -32,17 +32,19 @@ To get a move for the CIRCLE player:
 
 Other useful stuff
 -------------------
-
+ - board.checkWin(player) - what you would expect
  - board.free() gives all the open positions on the board eg. [ [1,1], [1,2] ... ]
    This can also be used to check for a draw in conjunction with checkWin. (No one is winning but no free positions = draw)
  - board.copy() returns a clone of the board - so you can mutate it without changing the game state
  - board.toString() returns a nice visual presentation of the board eg.
-      ------
-      - - X
-      X X O
-      - - O
-      ------
-- board.checkWin(player) - what you would expect
+<pre>
+\------
+\- - X
+X X O
+\- - O
+\------
+</pre>
+
 
 
 Examples
